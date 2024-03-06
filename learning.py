@@ -19,15 +19,12 @@ import sys
 import time
 from dataclasses import dataclass
 
-import time
-from rich.progress import Progress
+import torch
+import torch.nn as nn
 from rich.console import Console, Group
 from rich.live import Live
 from rich.panel import Panel
-from rich.text import Text
-
-import torch
-import torch.nn as nn
+from rich.progress import Progress
 from torch.nn import functional as F
 from torch.utils.data import Dataset
 from torch.utils.data.dataloader import DataLoader
@@ -619,7 +616,10 @@ class InfiniteDataLoader:
 
 # -----------------------------------------------------------------------------
 if __name__ == '__main__':
+    from datetime import datetime
 
+    start_time = datetime.now()
+    print(f"Start time {start_time}")
     # parse command line args
     parser = argparse.ArgumentParser(description="Make More")
     # system/input/output
@@ -715,7 +715,8 @@ if __name__ == '__main__':
     # training loop
     best_loss = None
 
-    with Live(Panel(Group(status, progress, panel), title="ML Process")):
+    ml_panel = Panel(Group(status, progress, panel), title="ML Process")
+    with Live(ml_panel):
 
         if args.max_steps != -1:
             task_id = progress.add_task("[bold green]Progress")
@@ -773,3 +774,5 @@ if __name__ == '__main__':
             # termination conditions
             if args.max_steps != -1 and args.max_steps <= step:
                 break
+    end_time = datetime.now()
+    print(f"End time {end_time}. Time delta {end_time - start_time}.")
