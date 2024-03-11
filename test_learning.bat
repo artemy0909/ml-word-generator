@@ -1,1 +1,1 @@
-.\venv\Scripts\python.exe .\learning.py -i .\ru_male_names.txt -o ru_male_names -m 1000 --batch-size 615
+.\venv\Scripts\python.exe .\mlwg.py -i .\ru_male_names.txt -o ru_male_names -t 5
